@@ -1,11 +1,13 @@
 from django.views.generic import ListView,DetailView
+from django.core.paginator import Paginator
+from django.views.generic.list import MultipleObjectMixin
 
 from .models import Product,Category
 
 class CategoryListView(ListView):
 
     model = Category
-    paginate_by = 6  
+    paginate_by = 6
     template_name = "products/categories.html"
     context_object_name = "categories"
 
@@ -13,14 +15,17 @@ class CategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         return context
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(DetailView,MultipleObjectMixin):
 
-    model = Category
+    model = Category    
+    paginate_by = 3
     template_name = "products/category.html"
     context_object_name = "category"
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        products = self.get_object().products.all()
+        context = super().get_context_data(object_list=products,**kwargs)
+
         return context
 
 class ProductListView(ListView):

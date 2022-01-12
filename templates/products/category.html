@@ -8,7 +8,7 @@
     </div>
     <div class="container-lg mt-5">
       <div class="row lg-px-5 px-2">
-        {% include "partials/product_list.html" with products=category.products.all %}
+        {% include "partials/product_list.html" with products=object_list %}
       </div>
       {% include "partials/pagination.html" %}
     </div>
