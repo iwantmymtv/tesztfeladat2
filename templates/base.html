@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +9,14 @@
     <title>{% block title %}Webshop{% endblock title %}</title>
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-light bg-light">
+    <nav class="navbar sticky-top navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Fixed top</a>
+          <a class="navbar-brand" href="#">Bookstore</a>
         </div>
       </nav>
     
       <main>
-        {% block content %}{% block content %}
+        {% block content %}{% endblock content %}
       </main>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>

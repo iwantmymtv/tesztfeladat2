@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block content %}
+  <section id="products" class="my-5">
+    <div class="container-lg mt-5">
+      <div class="row lg-px-5 px-2">
+        {% include "partials/product_list.html" with products=products %}
+      </div>
+      {% include "partials/pagination.html" %}
+    </div>
+  </section>
+  {% endblock content %}
