@@ -7,11 +7,14 @@
       </a>
       </div>
      <div class="py-2 d-flex flex-column w-100 border-top">
-       <span class=" px-4">{{p.name}}</span>
+       <span class=" px-4 mb-2">{{p.name}}</span>
+       <p>
+           <small class=" fst-italic text-dark">{{p.description|striptags|truncatechars:150}}</small>
+       </p>
      </div>
 
      <a href="{{p.get_absolute_url}}" class=" mb-4">
-       Tovább a termékre
+         More details
      </a>
     </div>
    </div>

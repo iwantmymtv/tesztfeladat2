@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class DateAwareModel(models.Model):
     created_at = models.DateTimeField(
@@ -18,6 +19,9 @@ class Category(DateAwareModel,models.Model):
     def __str__(self) -> str:
         return self.name
 
+    def get_absolute_url(self) -> str:
+        return reverse('products:category-detail', kwargs={'slug': self.slug})
+
 class Product(DateAwareModel,models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -34,4 +38,7 @@ class Product(DateAwareModel,models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self) -> str:
+        return reverse('products:product-detail', kwargs={'slug': self.slug})
 
