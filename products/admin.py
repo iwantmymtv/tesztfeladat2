@@ -5,7 +5,9 @@ from .models import Product,Category
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "category","price","in_stock"]
+    prepopulated_fields = {"slug": ("name",)}
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {"slug": ("name",)}
