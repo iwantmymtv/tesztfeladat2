@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from .models import Cart,CartItem
 from products.models import Product
@@ -51,5 +52,7 @@ def add_to_cart(request,product_id:int):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     item.quantity += 1
-    item.save
+    item.save()
+    messages.success(request,"Item was successfully added to cart")
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
