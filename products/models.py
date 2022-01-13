@@ -42,3 +42,5 @@ class Product(DateAwareModel,models.Model):
     def get_absolute_url(self) -> str:
         return reverse('products:product-detail', kwargs={'slug': self.slug})
 
+    def add_to_cart(self):
+        return reverse("cart:add-item", kwargs={"product_id": self.id})

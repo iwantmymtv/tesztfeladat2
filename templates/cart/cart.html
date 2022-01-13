@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My cart{% endblock title %}
+{% block content %}
+  <section id="products" class="mb-5" >
+    <div class="bg-darsecondary  text-center text-white py-5">
+        <h2>My cart</h2>
+    </div>
+    <div class="container-lg mt-5">
+        <table class="table bg-light border rounded-3">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit rice</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in cart.items.all %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td><img src="{{i.product.image.url}}" class="shadow" height="100" alt="image"></td>
+                <td>{{i.product.name}}</td>
+                <td>{{i.quantity}}</td>
+                <td>{{i.product.price}} Ft</td>
+                <td>{{i.total_price}} Ft</td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+  </section>
+  {% endblock content %}

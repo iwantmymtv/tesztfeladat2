@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Products{% endblock title %}
+{% block title %}{{product.name}}{% endblock title %}
 {% block content %}
   <section id="products" class="mb-5" >
     <div class="bg-dark text-center text-white py-5">
@@ -21,7 +21,7 @@
 
                   <p class="card-text">{{product.description}}</p>
                   <p class="card-text"><small class="text-muted">Last updated {{product.updated_at}}</small></p>
-                  <a class="btn btn-success" href="#">Add to cart</a>
+                  <a class="btn btn-success" href="{{product.add_to_cart}}">Add to cart</a>
 
                 </div>
               </div>
