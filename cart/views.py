@@ -39,20 +39,33 @@ def cart_view(request):
     }
     return render(request,"cart/cart.html",ctx)
 
-def add_to_cart(request,product_id:int):
+def add_to_cart(request,product_id:int,quantity:str):
+    #only negative and ppositive integers are valid
+    if quantity.lstrip("-").isdigit():
+        quantity = int(quantity)
+    else:
+        messages.error(request,f"Invalid value")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
     cart = get_cart(request)
     product = Product.objects.get(id = product_id)
     item,_ = CartItem.objects.get_or_create(
         cart=cart,
         product=product
     )
-    print(item)
-    if item.quantity +1 > product.in_stock:
-        messages.error(request,"Cannot add to cart, only,{product.in_stock} product(s)  available.")
+    #check if quantity is 
+    if item.quantity + quantity > product.in_stock:
+        messages.error(request,f"Cannot add to cart, only {product.in_stock} product(s)  available at the moment.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # if quantity is 0 or smaller remove item
+    elif item.quantity + quantity <= 0:
+        item.delete()
+        messages.success(request,"sUCCESSFULLY REMOVED FROM CART")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    item.quantity += 1
+    item.quantity += quantity
     item.save()
     messages.success(request,"Item was successfully added to cart")
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+

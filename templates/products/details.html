@@ -21,7 +21,11 @@
 
                   <p class="card-text">{{product.description}}</p>
                   <p class="card-text"><small class="text-muted">Last updated {{product.updated_at}}</small></p>
-                  <a class="btn btn-success" href="{{product.add_to_cart}}">Add to cart</a>
+                  <input type="number" id="add_to_cart_quantity" name="quantity" min="1" max="{{product.in_stock}}" value="1">
+
+                  <a class="btn btn-success" id="add_to_cart" href="{{product.add_to_cart}}">Add to cart 
+                  </a>
+
 
                 </div>
               </div>
@@ -31,3 +35,14 @@
     </div>
   </section>
   {% endblock content %}
+  {% block extrascript %}
+  <script>
+    const cartQuantity = document.getElementById("add_to_cart_quantity");    
+    const cartBtn = document.getElementById("add_to_cart");
+
+    cartQuantity.addEventListener("change",(e) => {
+      console.log(cartQuantity.value)
+      cartBtn.href = cartBtn.href.slice(0, -1) + cartQuantity.value
+    })
+  </script>
+  {% endblock extrascript %}
