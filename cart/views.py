@@ -69,3 +69,9 @@ def add_to_cart(request,product_id:int,quantity:str):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def delete_every_item(request):
+    cart = get_cart(request)
+    cart.flush()
+    messages.success(request,"everthing vanished :(")
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

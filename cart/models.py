@@ -16,6 +16,9 @@ class Cart(models.Model):
     def flush(self) -> None:
         self.items.all().delete()
 
+    def remove_all(self) -> str:
+        return reverse("cart:remove-all")
+
     def get_total_price(self) -> int:
         total = 0
         for i in self.items.all():

@@ -17,21 +17,24 @@
      <a href="{{p.get_absolute_url}}" class=" mb-4">
         More details
     </a>
-     <div class="d-flex mb-3">
-        <input type="number" id="add_to_cart_quantity" name="quantity" min="1" max="{{product.in_stock}}" value="1">
-        <a class="btn btn-success" id="add_to_cart" href="{{p.add_to_cart}}">Add to cart </a>
+     <div class="d-flex mb-3 add_to_cart">
+        <input type="number"  class="add_to_cart_quantity" name="quantity" min="1" max="{{product.in_stock}}" value="1">
+        <a class="btn btn-success add_to_cart_btn" id="add_to_cart" href="{{p.add_to_cart}}">Add to cart </a>
      </div>
     </div>
    </div>
 {% endfor %}
 {% block extrascript %}
 <script>
-  const cartQuantity = document.getElementById("add_to_cart_quantity");    
-  const cartBtn = document.getElementById("add_to_cart");
+  const addToCart = document.querySelectorAll(".add_to_cart");    
 
-  cartQuantity.addEventListener("change",(e) => {
-    console.log(cartQuantity.value)
-    cartBtn.href = cartBtn.href.slice(0, -1) + cartQuantity.value
+  addToCart.forEach(div => {
+    div.addEventListener("change",(e) => {
+        const cartBtn = div.querySelector('.add_to_cart_btn')
+        const cartQuantity = div.querySelector('.add_to_cart_quantity')
+        cartBtn.href = cartBtn.href.slice(0, -1) + cartQuantity.value
+    })
   })
+
 </script>
 {% endblock extrascript %}
