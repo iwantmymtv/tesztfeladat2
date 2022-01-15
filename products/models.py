@@ -44,3 +44,19 @@ class Product(DateAwareModel,models.Model):
 
     def add_to_cart(self):
         return reverse("cart:add-item", kwargs={"product_id": self.id,"quantity":1})
+
+
+class RecommendedProduct(DateAwareModel,models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField()
+    category = models.ForeignKey(
+        'Category',
+        related_name="product_wishes",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank =True
+        )
+    description = models.TextField(blank=True)
+
+    def __str__(self) -> str:
+        return self.name

@@ -53,6 +53,7 @@ def add_to_cart(request,product_id:int,quantity:str):
         cart=cart,
         product=product
     )
+
     #check if quantity is 
     if item.quantity + quantity > product.in_stock:
         messages.error(request,f"Cannot add to cart, only {product.in_stock} product(s)  available at the moment.")
@@ -60,12 +61,16 @@ def add_to_cart(request,product_id:int,quantity:str):
     # if quantity is 0 or smaller remove item
     elif item.quantity + quantity <= 0:
         item.delete()
-        messages.success(request,"sUCCESSFULLY REMOVED FROM CART")
+        messages.success(request,"Removed from cart!")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     item.quantity += quantity
     item.save()
-    messages.success(request,"Item was successfully added to cart")
+
+    if quantity > 0:
+        messages.success(request,"Item was successfully added to cart")
+    else:
+        messages.success(request,"Item was removed from cart")
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

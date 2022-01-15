@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Recommend Products{% endblock title %}
+{% block content %}
+  <section id="products" >
+    <div class="bg-danger text-center text-white py-5">
+        <h2>Recommend product</h2>
+    </div>
+    <div class="container-lg mt-5">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                {{field.label_tag}}                            
+                {{field|add_class:"form-control"}}
+            </div>
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <p class="text-red mb-2"> {{ error }} </p>
+            {% endfor %}
+            {% for error in field.errors %}
+            <p class="text-red mt-2">{{ error }}</p>
+            {% endfor %}
+            <div class="d-grid">
+                <button class="btn btn-lg btn-success rounded-1rem px-5" type="submit">Submit</button>
+            </div>
+        </form>       
+    </div>
+  </section>
+  {% endblock content %}

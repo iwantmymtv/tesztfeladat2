@@ -1,8 +1,13 @@
+from django.shortcuts import render
+from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView,DetailView
-from django.core.paginator import Paginator
 from django.views.generic.list import MultipleObjectMixin
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from .models import Product,Category
+from .forms import RecommendProductForm
 
 class CategoryListView(ListView):
 
@@ -48,3 +53,25 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class RecommendProductView(View):
+    form_class = RecommendProductForm
+    template_name = "products/recommend.html"
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST,request.FILES)
+        print("hello",form.changed_data)
+        if form.is_valid():
+            print("goos")
+            form.save()
+            messages.success(request,f"Thank you for your recommendation!")
+            return HttpResponseRedirect(reverse("products:product-list"))
+
+        return render(request, self.template_name, {'form': form})
+
+    
